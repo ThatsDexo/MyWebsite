@@ -1,27 +1,32 @@
 <?php
     if($_SERVER["REQUEST_METHOD"] == "POST"){
-        $message = $_POST["message"];
         $name = $_POST["name"];
-
+        $message = $_POST["message"];
+        
         try{
-            require_once "dbh.inc.php"; //same thing as including a file one time, but makes it an error instead of warning if something goes wrong
+            require_once "dbh.inc.php";
+
+            $query = "INSERT INTO guestbook (name, message)  VALUES(:name, :message);";
+            $stmt = $pdo->prepare($query);
             
-            $query = "INSERT INTO guestbook (name, message) VALUES(:name, :message)";
 
-            $stmt -> bindParam(":name", $name);
-            $stmt -> bindParam(":message", $message);
-            $stmt-> execute();
+            $stmt->bindParam(":name", $name);
+            $stmt->bindParam(":message", $message);
 
-            $pdo = null;
-            $stmt = null;
+            $stmt->execute();
 
-            header("Location: ../index.php");
+            $pdo = $null;
+            $stmt = $null;
+
             die();
+            header("Location: ../index.php");
+
         }catch(PDOException $e){
-            die("Error occured: " . $e->getMessage());
+            echo "Error occured: " . $e->getMessage();
+            die();
         }
 
     }
     else{
-        header("Location: ../index.php"); //Uses header function to send user back to index page if not using post method
+        header("Location: ../index.php");
     }
