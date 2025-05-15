@@ -1,0 +1,1 @@
+This is a repository for me to practice and learn more about how PHP works.
