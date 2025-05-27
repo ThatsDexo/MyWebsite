@@ -1,22 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <form method="post" action="includes/formhandler.inc.php">
-        <label for="message">Enter message: </label>
-        <input type="text" id="message" name="message">
+<?php
 
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name">
+require "functions.php";
+require "router.php";
+require "Database.php";
 
-        <input type="submit" name="submite" value="Submit">
+$db = new Database();
+$posts = $db->query("SELECT * FROM wall;")->fetch(PDO::FETCH_ASSOC);
 
-    
-    <form>
-    
-</body>
-</html>
+
+foreach($posts as $post){
+    echo "<li>{$post["message"]}</li>";
+}
+
