@@ -1,14 +1,12 @@
 <?php
 
 require "functions.php";
-require "router.php";
 require "Database.php";
+require "router.php";
 
-$db = new Database();
-$posts = $db->query("SELECT * FROM wall;")->fetch(PDO::FETCH_ASSOC);
+$config = require "config.php";
+$db = new Database($config["database"], "data_grip", "kwarner");
 
 
-foreach($posts as $post){
-    echo "<li>{$post["message"]}</li>";
-}
+
 
